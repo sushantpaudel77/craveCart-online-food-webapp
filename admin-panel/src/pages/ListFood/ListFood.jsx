@@ -2,23 +2,17 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "./ListFood.css";
+import { deleteFood, getFoodList } from "../../services/foodService";
 
 const ListFood = () => {
   const [list, setList] = useState([]);
 
   const fetchList = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/foods");
-      console.log("Fetched food list:", response.data);
-
-      if (response.status === 200) {
-        setList(response.data);
-      } else {
-        toast.error("Error while reading the foods.");
-      }
+      const data = await getFoodList();
+      setList(data);
     } catch (error) {
-      console.error("Error fetching foods:", error);
-      toast.error("Error while reading the foods.");
+      toast.error("Error while reading the foods");
     }
   };
 
@@ -27,14 +21,17 @@ const ListFood = () => {
   }, []);
 
   const removeFood = async (foodId) => {
-    const response = await axios.delete(
-      "http://localhost:8080/api/foods/" + foodId
-    );
-    await fetchList();
-    if (response.status === 204) {
-      toast.success("Food Removed.");
-    } else {
-      toast.error("Error occurred while removing food.");
+    try {
+      const success = await deleteFood(foodId); // make sure you're passing foodId
+      if (success) {
+        toast.success("Food item has been successfully removed.");
+        fetchList(); // refresh the list
+      } else {
+        toast.error("Failed to remove the food item. Please try again.");
+      }
+    } catch (error) {
+      console.error("Delete Error:", error);
+      toast.error("An unexpected error occurred while removing the food.");
     }
   };
 
