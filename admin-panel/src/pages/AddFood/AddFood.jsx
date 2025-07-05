@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { assets } from "../../assets/assets";
-import axios from "axios";
 import { addFood } from "../../services/foodService";
 import { toast } from "react-toastify";
 
@@ -80,6 +79,7 @@ const AddFood = () => {
                 </label>
                 <input
                   type="text"
+                  placeholder="Chicken Biryani"
                   className="form-control"
                   id="name"
                   required
@@ -94,6 +94,7 @@ const AddFood = () => {
                   Discription
                 </label>
                 <textarea
+                  placeholder="Write content here.."
                   className="form-control"
                   id="message"
                   rows="5"
@@ -129,6 +130,7 @@ const AddFood = () => {
                   Price
                 </label>
                 <input
+                  placeholder="रु 200"
                   type="number"
                   name="price"
                   id="price"

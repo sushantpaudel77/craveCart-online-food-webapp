@@ -21,6 +21,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -66,6 +67,14 @@ public class FoodServiceImpl implements FoodService {
         foodEntity.setImageUrl(imageUrl);
         FoodEntity savedFood = foodRepository.save(foodEntity);
         return convertToDTO(savedFood);
+    }
+
+    @Override
+    public List<FoodResponse> getFoods() {
+       return foodRepository.findAll()
+                .stream()
+                .map(this::convertToDTO)
+                .toList();
     }
 
     @Override

@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/api/foods")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin("*")
 public class FoodController {
 
     private final FoodService foodService;
@@ -42,21 +44,27 @@ public class FoodController {
     }
 
     @GetMapping
-    public ResponseEntity<PaginatedResponse<FoodResponse>> getPaginatedFoods(
-            @PageableDefault(
-                    size = 10,
-                    sort = "name",
-                    direction = Sort.Direction.ASC)
-            Pageable pageable) {
-        PaginatedResponse<FoodResponse> foodResponses = foodService.getPaginatedFoods(pageable);
-        return ResponseEntity.ok(foodResponses);
+    public ResponseEntity<List<FoodResponse>> getFoods() {
+        var foods = foodService.getFoods();
+        return ResponseEntity.ok(foods);
     }
 
-    @GetMapping("/{foodId}")
-    public ResponseEntity<FoodResponse> getFood(@PathVariable("foodId") String foodId) {
-        FoodResponse foodResponse = foodService.readFood(foodId);
-        return ResponseEntity.ok(foodResponse);
-    }
+//    @GetMapping
+//    public ResponseEntity<PaginatedResponse<FoodResponse>> getPaginatedFoods(
+//            @PageableDefault(
+//                    size = 10,
+//                    sort = "name",
+//                    direction = Sort.Direction.ASC)
+//            Pageable pageable) {
+//        PaginatedResponse<FoodResponse> foodResponses = foodService.getPaginatedFoods(pageable);
+//        return ResponseEntity.ok(foodResponses);
+//    }
+//
+//    @GetMapping("/{foodId}")
+//    public ResponseEntity<FoodResponse> getFood(@PathVariable("foodId") String foodId) {
+//        FoodResponse foodResponse = foodService.readFood(foodId);
+//        return ResponseEntity.ok(foodResponse);
+//    }
 
     @DeleteMapping("/{foodId}")
     public ResponseEntity<Void> deleteFood(@PathVariable("foodId") String foodId) {
