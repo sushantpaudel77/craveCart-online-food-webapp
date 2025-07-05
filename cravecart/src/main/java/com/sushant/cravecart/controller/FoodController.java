@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping(path = "/api/foods")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class FoodController {
 
     private final FoodService foodService;

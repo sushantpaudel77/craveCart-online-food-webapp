@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { assets } from "../../assets/assets";
+import axios from "axios";
+import { addFood } from "../../services/foodService";
+import { toast } from "react-toastify";
 
 const AddFood = () => {
   const [image, setImage] = useState(false);
@@ -22,11 +25,21 @@ const AddFood = () => {
     }));
   };
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async (event) => {
     event.preventDefault();
+
     if (!image) {
-      alert("Please select an image.");
+      toast.error("Please select an image.");
       return;
+    }
+
+    try {
+      await addFood(data, image);
+      toast.success("Food added sucessfully.");
+      setData({ name: "", description: "", category: "Biryani", price: "" });
+      setImage(null);
+    } catch (error) {
+      toast.error("Error adding food.");
     }
   };
 
@@ -50,7 +63,15 @@ const AddFood = () => {
                   className="form-control"
                   id="image"
                   hidden
-                  onChange={(e) => setImage(e.target.files[0])}
+                  onChange={(e) => {
+                    const selectedFile = e.target.files[0];
+                    if (selectedFile && selectedFile.size > 5 * 1024 * 1024) {
+                      toast.error("File size should not exceed 5MB.");
+                      e.target.value = null;
+                      return;
+                    }
+                    setImage(selectedFile);
+                  }}
                 />
               </div>
               <div className="mb-3">
