@@ -1,4 +1,8 @@
 package com.sushant.cravecart.service;
 
-public class FoodService {
+import org.springframework.web.multipart.MultipartFile;
+
+public interface FoodService {
+
+    String uploadFile(MultipartFile file);
 }
