@@ -4,8 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sushant.cravecart.io.FoodRequest;
 import com.sushant.cravecart.io.FoodResponse;
+import com.sushant.cravecart.io.PaginatedResponse;
 import com.sushant.cravecart.service.FoodService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,5 +38,28 @@ public class FoodController {
         }
         FoodResponse foodResponse = foodService.addFood(request, file);
         return ResponseEntity.status(HttpStatus.CREATED).body(foodResponse);
+    }
+
+    @GetMapping
+    public ResponseEntity<PaginatedResponse<FoodResponse>> getPaginatedFoods(
+            @PageableDefault(
+                    size = 10,
+                    sort = "name",
+                    direction = Sort.Direction.ASC)
+            Pageable pageable) {
+        PaginatedResponse<FoodResponse> foodResponses = foodService.getPaginatedFoods(pageable);
+        return ResponseEntity.ok(foodResponses);
+    }
+
+    @GetMapping("/{foodId}")
+    public ResponseEntity<FoodResponse> getFood(@PathVariable("foodId") String foodId) {
+        FoodResponse foodResponse = foodService.readFood(foodId);
+        return ResponseEntity.ok(foodResponse);
+    }
+
+    @DeleteMapping("/{foodId}")
+    public ResponseEntity<Void> deleteFood(@PathVariable("foodId") String foodId) {
+        foodService.deleteFood(foodId);
+        return ResponseEntity.noContent().build();
     }
 }
