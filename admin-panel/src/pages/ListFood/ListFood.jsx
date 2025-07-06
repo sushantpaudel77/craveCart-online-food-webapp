@@ -61,7 +61,7 @@ const ListFood = () => {
                   <td className="text-danger">
                     <i
                       className="bi bi-x-circle-fill"
-                      onClick={() => removeFood(item.id)}
+                      onClick={() => removeFood(item.foodId)}
                     ></i>
                   </td>
                 </tr>

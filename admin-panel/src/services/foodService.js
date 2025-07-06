@@ -4,8 +4,8 @@ const API_URL = "http://localhost:8080/api/foods";
 
 export const addFood = async (foodData, image) => {
   const formData = new FormData();
-  formData.append("food", JSON.stringify(foodData)); // assuming backend expects this
-  formData.append("file", image); // assuming 'file' matches your backend param name
+  formData.append("food", JSON.stringify(foodData)); 
+  formData.append("file", image); 
 
   try {
     await axios.post(API_URL, formData, {
@@ -19,9 +19,15 @@ export const addFood = async (foodData, image) => {
   }
 };
 
-export const getFoodList = async () => {
+export const getFoodList = async (page = 0, size = 10) => {
   try {
-    const response = await axios.get(API_URL);
+    const response = await axios.get(API_URL, {
+      params: {
+        page: page,
+        size: size
+      }
+    });
+    // Return the paginated response object
     return response.data;
   } catch (error) {
     console.error("Error fetching foods:", error);
