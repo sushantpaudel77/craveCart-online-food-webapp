@@ -1,18 +1,19 @@
 import React from "react";
 import "./Menubar.css";
 import { assets } from "../../assets/assets";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Menubar = () => {
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="container-fluid">
+        <div className="container">
           <img
             src={assets.logo}
             alt=""
-            className="logo"
-            height={50}
-            width={50}
+            className="mx-4"
+            height={48}
+            width={48}
           />
           <button
             className="navbar-toggler"
@@ -44,19 +45,21 @@ const Menubar = () => {
                 </a>
               </li>
             </ul>
-            <div className="menubar-right">
+            <div className="d-flex align-items gap-4">
               <div className="position-relative">
                 <img
                   src={assets.cart}
                   alt=""
-                  height={45}
-                  width={45}
+                  height={30}
+                  width={30}
                   className="position-relative"
                 />
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning"></span>
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning m-1">4</span>
               </div>
+              <button className="btn btn-outline-primary">Login</button>
+              <button className="btn btn-outline-primary">Register</button>
             </div>
-          </div>
+          </div>                                                                                                                                                                                                                                                                                   
         </div>
       </nav>
     </div>
