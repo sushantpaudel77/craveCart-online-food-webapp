@@ -2,6 +2,7 @@ import React from "react";
 import "./Menubar.css";
 import { assets } from "../../assets/assets";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
 
 const Menubar = () => {
   return (
@@ -29,20 +30,20 @@ const Menubar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/explore">
                   Explore
-                </a>
+                </Link>
               </li>
 
               <li className="nav-item">
-                <a className="nav-link" href="#">
+                <Link className="nav-link" to="/contact">
                   Contant us
-                </a>
+                </Link>
               </li>
             </ul>
             <div className="d-flex align-items gap-4">
@@ -54,12 +55,14 @@ const Menubar = () => {
                   width={30}
                   className="position-relative"
                 />
-                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning m-1">4</span>
+                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning m-1">
+                  4
+                </span>
               </div>
               <button className="btn btn-outline-primary">Login</button>
               <button className="btn btn-outline-primary">Register</button>
             </div>
-          </div>                                                                                                                                                                                                                                                                                   
+          </div>
         </div>
       </nav>
     </div>
