@@ -5,6 +5,7 @@ import "./ExploreMenu.css"
 const ExploreMenu = () => {
 
   const menuRef = useRef(null);
+  
   const scrollLeft = () => {
     if (menuRef.current) {
       menuRef.current.scrollBy({left: -200, behaviour: "smooth"});

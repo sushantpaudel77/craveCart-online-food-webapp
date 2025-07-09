@@ -7,11 +7,18 @@ export const StoreContextProvider = (props) => {
   const [foodList, setFoodList] = useState([]);
 
   const fetchFoodList = async () => {
-    const response = await axios.get("http://localhost:8080/api/foods");
-    setFoodList(response.data);
+    try {
+      const response = await axios.get("http://localhost:8080/api/foods");
+      setFoodList(response.data);
+    } catch (error) {
+      console.error("Error fetching food list:", error);
+    }
   };
+  0;
 
-  const contextValue = {};
+  const contextValue = {
+    foodList,
+  };
 
   useEffect(() => {
     async function loadData() {
