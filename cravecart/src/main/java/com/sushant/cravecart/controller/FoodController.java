@@ -43,28 +43,28 @@ public class FoodController {
         return ResponseEntity.status(HttpStatus.CREATED).body(foodResponse);
     }
 
+//    @GetMapping
+//    public ResponseEntity<List<FoodResponse>> getFoods() {
+//        var foods = foodService.getFoods();
+//        return ResponseEntity.ok(foods);
+//    }
+
     @GetMapping
-    public ResponseEntity<List<FoodResponse>> getFoods() {
-        var foods = foodService.getFoods();
-        return ResponseEntity.ok(foods);
+    public ResponseEntity<PaginatedResponse<FoodResponse>> getPaginatedFoods(
+            @PageableDefault(
+                    size = 10,
+                    sort = "name",
+                    direction = Sort.Direction.ASC)
+            Pageable pageable) {
+        PaginatedResponse<FoodResponse> foodResponses = foodService.getPaginatedFoods(pageable);
+        return ResponseEntity.ok(foodResponses);
     }
 
-//    @GetMapping
-//    public ResponseEntity<PaginatedResponse<FoodResponse>> getPaginatedFoods(
-//            @PageableDefault(
-//                    size = 10,
-//                    sort = "name",
-//                    direction = Sort.Direction.ASC)
-//            Pageable pageable) {
-//        PaginatedResponse<FoodResponse> foodResponses = foodService.getPaginatedFoods(pageable);
-//        return ResponseEntity.ok(foodResponses);
-//    }
-//
-//    @GetMapping("/{foodId}")
-//    public ResponseEntity<FoodResponse> getFood(@PathVariable("foodId") String foodId) {
-//        FoodResponse foodResponse = foodService.readFood(foodId);
-//        return ResponseEntity.ok(foodResponse);
-//    }
+    @GetMapping("/{foodId}")
+    public ResponseEntity<FoodResponse> getFood(@PathVariable("foodId") String foodId) {
+        FoodResponse foodResponse = foodService.readFood(foodId);
+        return ResponseEntity.ok(foodResponse);
+    }
 
     @DeleteMapping("/{foodId}")
     public ResponseEntity<Void> deleteFood(@PathVariable("foodId") String foodId) {

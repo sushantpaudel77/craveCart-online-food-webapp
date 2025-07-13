@@ -27,7 +27,6 @@ export const getFoodList = async (page = 0, size = 10) => {
         size: size
       }
     });
-    // Return the paginated response object
     return response.data;
   } catch (error) {
     console.error("Error fetching foods:", error);
